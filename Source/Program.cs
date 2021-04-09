@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace Project
 {
@@ -12,11 +13,22 @@ namespace Project
                 return -1;
             }
 
+            var _Url = @"http://data.ekape.or.kr/openapi-data/service/user/grade/auct/beefGrade";
+            var _Param = new Dictionary<string, string>() {
+		            { "serviceKey", System.Web.HttpUtility.UrlDecode(args[0]) },
+                    { "startYmd", "20160120" },
+                    { "endYmd", "20160120" },
+                    { "abattCd", "0302" },
+                    { "sexCd", "1" },
+	            };
+
+	        _Url = new Uri(Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(_Url, _Param)).ToString();
+
             // 가지고 오기
             var _Body = new System.Net.WebClient()
             {
                 Encoding = System.Text.Encoding.UTF8
-            }.DownloadString($@"http://data.ekape.or.kr/openapi-data/service/user/grade/auct/beefGrade?serviceKey={args[0]}&startYmd=20160120&endYmd=20160120&abattCd=0302&sexCd=1");
+            }.DownloadString(_Url);
 
             // 문법 정렬
             var _XDocument = XDocument.Parse(_Body);
