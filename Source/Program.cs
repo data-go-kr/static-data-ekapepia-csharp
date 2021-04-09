@@ -37,6 +37,7 @@ namespace Project
             var _Now = System.DateTime.Now;
 
             var _CurrentPath = System.IO.Directory.GetCurrentDirectory();
+            Console.WriteLine(_CurrentPath);
             _CurrentPath = System.IO.Path.Combine(_CurrentPath, "Data");
 
             // 폴더 생성 - current
